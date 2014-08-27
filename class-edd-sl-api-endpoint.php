@@ -1,6 +1,6 @@
 <?php
 
-if( stristr( $_SERVER['REQUEST_URI'], 'edd-sl-api' ) === false ) {
+if( stristr( $_SERVER['REQUEST_URI'], '/edd-sl-api' ) === false ) {
 	return;
 }
 
