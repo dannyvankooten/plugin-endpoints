@@ -24,9 +24,6 @@ class EDD_SL_API_Endpoint {
 		// prevent session query caused by EDD
 		define( 'EDD_USE_PHP_SESSIONS', true );
 
-		// set a fake session id so EDD doesn't start sessiosn
-		session_id( 1 );
-
 		// filter active plugins
 		add_filter( 'option_active_plugins', array( $this, 'filter_active_plugins' ) );
 
