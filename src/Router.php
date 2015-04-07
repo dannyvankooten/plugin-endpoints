@@ -12,7 +12,7 @@ class Router {
 	/**
 	 * @var Endpoint
 	 */
-	public $requested_endpoint;
+	public $requested_endpoint = null;
 
 	/**
 	 * Constructor
@@ -22,9 +22,9 @@ class Router {
 	}
 
 	/**
-	 * @param string $url
-	 * @param array $plugins
-	 * @param bool $returns_json
+	 * @param string $url The leading URL for this endpoint
+	 * @param array $plugins Array of enabled plugin slugs for this endpoint
+	 * @param bool $returns_json Whether this endpoint is expected to return JSON (disables themes, widgets, etc)
 	 */
 	public function register_endpoint( $url, array $plugins = array(), $returns_json = false ) {
 		$endpoint = new Endpoint( $url, $plugins, $returns_json );
@@ -32,7 +32,7 @@ class Router {
 	}
 
 	/**
-	 * @return bool
+	 * @return Endpoint|null
 	 */
 	public function get_requested_endpoint() {
 
@@ -58,20 +58,22 @@ class Router {
 			return false;
 		}
 
-		// disable cronjobs & themes for this request
+		// disable cronjobs for this request
 		define( 'DISABLE_WP_CRON', true );
 
 		// filter active plugins
 		add_filter( 'option_active_plugins', array( $this, 'filter_active_plugins' ) );
 
-		// if this endpoint returns json, do not load themes at all.
+		// is this endpoint expected to return json?
 		if( $this->requested_endpoint->returns_json ) {
+
+			// don't load themes
 			define( 'WP_USE_THEMES', false );
 
-			// throw error if a result hasn't been returned after WP has fully loaded
+			// stop processing request on `wp_loaded`, this means the plugin returning the JSON should have responded (and exited) by then.
 			add_action( 'wp_loaded', array( $this, 'kill_request' ), 1);
 
-			// disable loading of any widgets
+			// disable all widgets
 			add_filter( 'after_setup_theme', array( $this, 'disable_widgets' ) );
 		}
 	}
