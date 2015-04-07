@@ -40,7 +40,7 @@ The following example registers an endpoint for Easy Digital Downloads & the Sof
 
 // file: `/wp-content/mu-plugins/endpoints.php`
 
-// load the autoloader
+// load the autoloader manually (or use Composer!)
 require __DIR__ . '/plugin-endpoints/vendor/autoload.php';
 
 // instantiate the routing class
@@ -58,6 +58,8 @@ $router->register_endpoint(
 
 // done! 
 ```
+
+Now, point your requests at `https://your-site/edd-sl-api....` and you'll see that only the specified plugins are enabled for the request. 
 
 ```
 GET http://local.wp/edd-sl-api/?edd_action=activate_license...
