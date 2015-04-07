@@ -1,0 +1,20 @@
+{
+    "name": "dannyvankooten/plugin-endpoints",
+    "description": "Allows you to create plugin endpoints, enabling only the minimum number of required plugins.",
+    "authors": [
+        {
+            "name": "Danny van Kooten",
+            "email": "dannyvankooten@gmail.com"
+        }
+    ],
+    "license": "GPL-2.0+",
+    "require": {
+      "php": ">=5.3.0"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "4.5.*"
+    },
+    "autoload": {
+      "classmap": [ "src/" ]
+    }
+}

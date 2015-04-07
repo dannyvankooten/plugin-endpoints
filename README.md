@@ -1,17 +1,66 @@
-# EDD Software Licensing Endpoint
+Plugin Endpoints
+=================
 
-This class creates and endpoint for the Easy Digital Downloads Softare Licensing add-on. It dramatically increases the performance of all (remote) API requests.
+This tiny library allows you to register various URL endpoints. When any of these endpoints is requested, only the specified set of enabled plugins will be loaded.
 
-Results depend on many factors (active plugins, ..) but it is not unusual to experience a 50% gain in speed and a decrease in memory consumption of about 25-30%.
+[![Build Status](https://api.travis-ci.org/dannyvankooten/plugin-endpoints.png?branch=master)](https://travis-ci.org/dannyvankooten/plugin-endpoints)
+[![Stable Version](https://poser.pugx.org/dannyvankooten/plugin-endpoints/v/stable.svg)](https://packagist.org/packages/dannyvankooten/plugin-endpoints)
+[![License](https://poser.pugx.org/dannyvankooten/plugin-endpoints/license.svg)](https://packagist.org/packages/dannyvankooten/plugin-endpoints)
+[![Code Climate](https://codeclimate.com/github/dannyvankooten/plugin-endpoints/badges/gpa.svg)](https://codeclimate.com/github/dannyvankooten/plugin-endpoints)
 
-### Usage 
+This drastically improves performance for requests to these URL's, only loading the minimum number of required plugins to return the final response.
 
-1. Add the plugin file to your `/wp-content/mu-plugins` folder of the site running Easy Digital Downloads & EDD Software Licensing.
-1. In your products, point all API requests to `yoursite.com/edd-sl-api`.
+Results depend on many factors but it is not unusual to experience a 50% gain in speed and a decrease in memory consumption of about 30%.
 
-*Example API URL's*
+# Installation
+
+## Using Composer
+
 ```
-https://youreddstore.com/edd-sl-api/?edd_action=get_version....
-https://youreddstore.com/edd-sl-api/?edd_action=activate_license....
-https://youreddstore.com/edd-sl-api/?edd_action=deactivate_license....
+{
+    "require": {
+        "dannyvankooten/plugin-endpoints": "dev-master"
+    }
+}
 ```
+
+## Manually
+
+```php
+require __DIR__ . '/plugin-endpoints/vendor/autoload.php';
+```
+
+# Usage
+
+Because the library needs control over which plugins are loaded, you need to instantiate the Router class and register your endpoints from your `mu-plugins` folder. 
+
+The following example registers an endpoint for Easy Digital Downloads & the Software Licensing add-on.
+
+```php
+
+// file: `/wp-content/mu-plugins/endpoints.php`
+
+// load the autoloader
+require __DIR__ . '/plugin-endpoints/vendor/autoload.php';
+
+// instantiate the routing class
+$router = new PluginEndpoints\Router;
+
+// register an endpoint
+$router->register_endpoint( 
+	'/edd-sl-api', 	// listen to requests starting with /edd-sl-api
+	array(
+		'easy-digital-downloads/easy-digital-downloads.php',
+		'edd-software-licensing/edd-software-licenses.php' 
+	),				// only enable edd & edd sl plugins
+	true 			// this response should return json, do not load themes
+);
+
+// done! 
+```
+
+```
+GET http://local.wp/edd-sl-api/?edd_action=activate_license...
+```
+
+
