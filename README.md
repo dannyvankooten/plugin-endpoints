@@ -16,7 +16,7 @@ Results depend on many factors but it is not unusual to experience a 50% gain in
 
 ## Using Composer
 
-```
+```json
 {
     "require": {
         "dannyvankooten/plugin-endpoints": "dev-master"
