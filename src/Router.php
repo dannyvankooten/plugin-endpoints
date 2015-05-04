@@ -67,8 +67,8 @@ class Router {
 		// is this endpoint expected to return json?
 		if( $this->requested_endpoint->returns_json ) {
 
-			// don't load themes
-			define( 'WP_USE_THEMES', false );
+			// don't load themes - Does not work here. 
+			//define( 'WP_USE_THEMES', false );
 
 			// stop processing request on `wp_loaded`, this means the plugin returning the JSON should have responded (and exited) by then.
 			add_action( 'wp_loaded', array( $this, 'kill_request' ), 1);
