@@ -17,12 +17,11 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function test_register_endpoint() {
 		// sample endpoints
-		$endpoint_1 = new Endpoint( '/url-1', array(
+		$one = new Endpoint( '/url-1', array(
 			'plugin-1/plugin-1.php'
 			)
 		);
-
-		$endpoint_2 = new Endpoint( '/url-2', array(
+		$two = new Endpoint( '/url-2', array(
 				'plugin-1/plugin-1.php',
 				'plugin-2/plugin-2.php'
 			)
@@ -30,13 +29,19 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 		$router = new Router();
 
+		// start empty
+		$endpoints = self::readAttribute( $router, 'endpoints' );
+		self::assertEmpty( $endpoints );
+
 		// register 1st endpoint
-		$router->register_endpoint( $endpoint_1->url, $endpoint_1->active_plugins );
-		$this->assertEquals( $router->endpoints, array( $endpoint_1 ) );
+		$router->register_endpoint( $one->url, $one->active_plugins );
+		$endpoints = self::readAttribute( $router, 'endpoints' );
+		$this->assertEquals( $endpoints, array( $one ) );
 
 		// register 2nd endpoint
-		$router->register_endpoint( $endpoint_2->url, $endpoint_2->active_plugins );
-		$this->assertEquals( $router->endpoints, array( $endpoint_1, $endpoint_2 ) );
+		$router->register_endpoint( $two->url, $two->active_plugins );
+		$endpoints = self::readAttribute( $router, 'endpoints' );
+		$this->assertEquals( $endpoints, array( $one, $two ) );
 	}
 
 	public function test_get_requested_endpoint() {
@@ -70,7 +75,6 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		// 2 registered endpoints, requesting subset of 2nd endpoint's url
 		$_SERVER['REQUEST_URI'] = $endpoint_2->url . '/additional-url-string';
 		$this->assertEquals( $endpoint_2, $router->get_requested_endpoint() );
-
 	}
 
 }

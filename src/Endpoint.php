@@ -15,18 +15,11 @@ class Endpoint {
 	public $active_plugins = array();
 
 	/**
-	 * @var bool Whether the request should return JSON (disables loading of themes if enabled)
-	 */
-	public $returns_json = false;
-
-	/**
 	 * @param string $url
 	 * @param array  $plugins
-	 * @param bool $returns_json
 	 */
-	public function __construct( $url = '/', array $plugins = array(), $returns_json = false ) {
+	public function __construct( $url = '/', array $plugins = array() ) {
 		$this->url = $url;
 		$this->active_plugins = $plugins;
-		$this->returns_json = $returns_json;
 	}
 }
