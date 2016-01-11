@@ -53,16 +53,14 @@ $router->register_endpoint(
 		'easy-digital-downloads/easy-digital-downloads.php',
 		'edd-software-licensing/edd-software-licenses.php' 
 	),				// only enable edd & edd sl plugins
-	true 			// this response should return json, do not load themes
 );
 
 // done! 
 ```
 
-Now, point your requests at `https://your-site/edd-sl-api....` and you'll see that only the specified plugins are enabled for the request. 
+Now, point a request at `https://your-site/edd-sl-api....` and notice that only the specified plugins are loaded for the request. 
 
 ```
 GET http://local.wp/edd-sl-api/?edd_action=activate_license...
 ```
-
 
