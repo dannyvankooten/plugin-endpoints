@@ -53,7 +53,9 @@ class Router {
 		}
 
 		// disable cronjobs for this request
-		define( 'DISABLE_WP_CRON', true );
+		if(!defined('DISABLE_WP_CRON')){
+			define( 'DISABLE_WP_CRON', true );
+		}
 
 		// filter active plugins
 		add_filter( 'option_active_plugins', function() use ( $endpoint ) {
