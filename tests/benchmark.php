@@ -1,15 +1,21 @@
 <?php
 
+// load & mock
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/mocks.php';
 $_SERVER['REQUEST_URI'] = '/';
 
+// read args
+global $argv;
+$n = isset( $argv[1] ) ? intval( $argv[1] ) : 1000;
+
 $start = microtime(true);
+
 
 $router = new \PluginEndpoints\Router();
 
 // register 1000 endpoints
-for( $i=0; $i < 100; $i++ ) {
+for( $i=0; $i < $n; $i++ ) {
     $router->register_endpoint( sprintf( "/url-%d", $i ), array() );
 }
 
