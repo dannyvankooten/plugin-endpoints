@@ -51,8 +51,8 @@ $router->register_endpoint(
 	'/edd-sl-api', 	// listen to requests starting with /edd-sl-api
 	array(
 		'easy-digital-downloads/easy-digital-downloads.php',
-		'edd-software-licensing/edd-software-licenses.php' 
-	),				// only enable edd & edd sl plugins
+		'edd-software-licensing/edd-software-licenses.php'
+	)				// only enable edd & edd sl plugins
 );
 
 // done! 
