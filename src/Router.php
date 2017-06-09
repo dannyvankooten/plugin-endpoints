@@ -31,7 +31,9 @@ class Router {
 	public function get_requested_endpoint() {
 
 		foreach( $this->endpoints as $endpoint ) {
-			if( strpos( $_SERVER['REQUEST_URI'], $endpoint->url ) === 0 ) {
+			preg_match( '@' . $endpoint->url . '@', $_SERVER['REQUEST_URI'], $matches );
+
+			if( ! empty( $matches ) ) {
 				return $endpoint;
 			}
 		}
