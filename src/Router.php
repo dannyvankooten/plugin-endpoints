@@ -32,6 +32,7 @@ class Router {
 
 		foreach( $this->endpoints as $endpoint ) {
 			if( strpos( $_SERVER['REQUEST_URI'], $endpoint->url ) === 0 ) {
+				define( 'DOING_AJAX', true );
 				return $endpoint;
 			}
 		}
